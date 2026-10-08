@@ -164,7 +164,7 @@ export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDr
           </div>
           <div className="t4s-drawer-contact-item">
             <span>📞</span>
-            <span>Support &amp; WhatsApp: Available 24/7</span>
+            <span>Support & WhatsApp: Available 24/7</span>
           </div>
           <div style={{ marginTop: 12 }}>
             <Link

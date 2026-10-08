@@ -101,7 +101,7 @@ export default function Footer() {
                 letterSpacing: 0.5,
               }}
             >
-              Policies &amp; Support
+              Policies & Support
             </h4>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
               {[
@@ -191,9 +191,8 @@ export default function Footer() {
             color: "#6b7280",
           }}
         >
-          <div>
-            &copy; 2026{" "}
-            <strong style={{ color: "#ffffff" }}>TapScan.pk</strong>. Pakistan’s Smart QR &amp; NFC Stand Solution. All Rights Reserved.
+          <div suppressHydrationWarning>
+            © 2026 <strong style={{ color: "#ffffff" }}>TapScan.pk</strong>. Pakistan&apos;s Smart QR & NFC Stand Solution. All Rights Reserved.
           </div>
 
           {/* Badges / Payment */}

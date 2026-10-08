@@ -48,7 +48,7 @@ export default function FeatureShowcase() {
                 marginBottom: 8,
               }}
             >
-              Grow Reviews, Followers &amp; Customers
+              Grow Reviews, Followers & Customers
             </span>
 
             <h2
@@ -65,7 +65,7 @@ export default function FeatureShowcase() {
 
             <p style={{ fontSize: 15, color: "#555555", lineHeight: 1.7, marginBottom: 20 }}>
               <strong>TapScan</strong>, a Pakistan-based online business operating from Lahore,
-              delivers ready-to-use NFC &amp; QR stands that help businesses connect with customers
+              delivers ready-to-use NFC & QR stands that help businesses connect with customers
               instantly. One tap or scan on our smart stands lets your customers leave 5-star Google
               reviews, follow your Instagram, and like your Facebook page — in seconds with zero apps required.
             </p>
