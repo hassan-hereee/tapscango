@@ -15,10 +15,15 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const accountMenuRef = useRef<HTMLDivElement>(null);
 
   const { totalItems, setIsCartOpen } = useCart();
   const { user, openLoginModal, logout } = useAuth();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close account menu on click outside
   useEffect(() => {
@@ -197,19 +202,19 @@ export default function Header() {
                   type="button"
                   className="t4s-action-btn t4s-account-btn"
                   onClick={() => {
-                    if (user) {
+                    if (mounted && user) {
                       setIsAccountMenuOpen(!isAccountMenuOpen);
                     } else {
                       openLoginModal();
                     }
                   }}
-                  aria-label={user ? `Account menu for ${user.name}` : "Log In or Sign Up"}
+                  aria-label={mounted && user ? `Account menu for ${user.name}` : "Log In or Sign Up"}
                   style={{ position: "relative" }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    stroke={user ? "#0b69b3" : "currentColor"}
+                    stroke={mounted && user ? "#0b69b3" : "currentColor"}
                     strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
@@ -220,7 +225,7 @@ export default function Header() {
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
-                  {user && (
+                  {mounted && user && (
                     <span
                       style={{
                         position: "absolute",
@@ -237,7 +242,7 @@ export default function Header() {
                 </button>
 
                 {/* Authenticated Dropdown Menu */}
-                {user && isAccountMenuOpen && (
+                {mounted && user && isAccountMenuOpen && (
                   <div className="tap-account-menu">
                     <div className="tap-account-menu-header">
                       <div className="tap-account-menu-name">{user.name}</div>

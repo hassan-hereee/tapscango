@@ -13,7 +13,12 @@ interface MobileDrawerProps {
 
 export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDrawerProps) {
   const [shopOpen, setShopOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { user, openLoginModal, logout } = useAuth();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -175,7 +180,7 @@ export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDr
             <span>WhatsApp: 0327 4780117</span>
           </a>
           <div style={{ marginTop: 12 }}>
-            {user ? (
+            {mounted && user ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <Link
                   href="/account"
