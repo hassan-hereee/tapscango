@@ -5,13 +5,13 @@ import Link from "next/link";
 
 export default function FeatureShowcase() {
   return (
-    <section style={{ padding: "80px 0", backgroundColor: "#ffffff" }}>
+    <section style={{ padding: "clamp(40px, 6vw, 80px) 0", backgroundColor: "#ffffff" }}>
       <div className="t4s-container">
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 48,
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "clamp(24px, 4vw, 48px)",
             alignItems: "center",
           }}
         >
@@ -53,7 +53,7 @@ export default function FeatureShowcase() {
 
             <h2
               style={{
-                fontSize: 32,
+                fontSize: "clamp(22px, 3.5vw, 32px)",
                 fontWeight: 700,
                 color: "#08497e",
                 lineHeight: 1.25,

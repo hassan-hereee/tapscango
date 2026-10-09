@@ -35,14 +35,14 @@ export default function BrandLogos() {
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "center",
-            gap: 40,
+            gap: "clamp(14px, 3vw, 40px)",
           }}
         >
           {BRANDS.map((brand, idx) => (
             <div
               key={idx}
               style={{
-                width: 140,
+                width: "clamp(125px, 40vw, 150px)",
                 height: 70,
                 position: "relative",
                 display: "flex",

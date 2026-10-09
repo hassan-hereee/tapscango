@@ -377,7 +377,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div className="t4s-pdp-qty-row">
           {/* Stepper */}
           <div
             style={{
@@ -387,6 +387,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
               borderRadius: 8,
               backgroundColor: "#ffffff",
               overflow: "hidden",
+              alignSelf: "flex-start",
             }}
           >
             <button
@@ -439,7 +440,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
           </div>
 
           {/* Bundle incentive pills */}
-          <div style={{ display: "flex", gap: 8, flex: 1 }}>
+          <div className="t4s-pdp-bundle-pills">
             <button
               type="button"
               onClick={() => setQuantity(2)}
@@ -557,10 +558,8 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
 
       {/* Trust Checklist */}
       <div
+        className="t4s-pdp-trust-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 12,
           padding: "16px",
           backgroundColor: "#f8fafc",
           borderRadius: 12,

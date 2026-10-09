@@ -88,7 +88,7 @@ export default function FaqSection() {
                   onClick={() => toggle(idx)}
                   style={{
                     width: "100%",
-                    padding: "18px 24px",
+                    padding: "clamp(14px, 3vw, 18px) clamp(16px, 3.5vw, 24px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
@@ -117,12 +117,11 @@ export default function FaqSection() {
                 {isOpen && (
                   <div
                     style={{
-                      padding: "0 24px 20px",
+                      padding: "14px clamp(16px, 3.5vw, 24px) 20px",
                       fontSize: 14.5,
                       color: "#555555",
                       lineHeight: 1.65,
                       borderTop: "1px solid #f0f4f8",
-                      paddingTop: 14,
                     }}
                   >
                     {faq.answer}

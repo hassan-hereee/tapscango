@@ -55,15 +55,15 @@ export default function ProductBeforeAfter() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-            gap: 28,
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "clamp(20px, 3vw, 28px)",
           }}
         >
           {/* Card 1: Without TapScan */}
           <div
             style={{
               backgroundColor: "#ffffff",
-              padding: "36px 30px",
+              padding: "clamp(24px, 4vw, 36px) clamp(18px, 3.5vw, 30px)",
               borderRadius: 18,
               border: "1.5px solid #fecaca",
               boxShadow: "0 4px 16px rgba(239, 68, 68, 0.05)",
@@ -108,7 +108,7 @@ export default function ProductBeforeAfter() {
           <div
             style={{
               backgroundColor: "#ffffff",
-              padding: "36px 30px",
+              padding: "clamp(24px, 4vw, 36px) clamp(18px, 3.5vw, 30px)",
               borderRadius: 18,
               border: "2px solid #08497e",
               boxShadow: "0 8px 28px rgba(8, 73, 126, 0.12)",

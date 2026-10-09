@@ -114,7 +114,7 @@ export default function ProductsCatalogPage() {
               </div>
 
               {/* Search & Sort Controls */}
-              <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", width: "100%", maxWidth: 440 }}>
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -126,7 +126,8 @@ export default function ProductsCatalogPage() {
                     border: "1px solid #cbd5e1",
                     fontSize: 13,
                     outline: "none",
-                    minWidth: 200,
+                    flex: "1 1 180px",
+                    minWidth: 150,
                   }}
                 />
 
@@ -140,6 +141,7 @@ export default function ProductsCatalogPage() {
                     fontSize: 13,
                     backgroundColor: "#ffffff",
                     cursor: "pointer",
+                    flexShrink: 0,
                   }}
                 >
                   <option value="featured">Featured</option>
@@ -159,8 +161,8 @@ export default function ProductsCatalogPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
-                gap: 28,
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))",
+                gap: "clamp(16px, 3vw, 28px)",
                 marginBottom: 60,
               }}
             >

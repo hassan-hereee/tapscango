@@ -14,15 +14,7 @@ export default function WhatsAppFloatingButton() {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: 24,
-        right: 24,
-        zIndex: 9999,
-        fontFamily: "var(--font-body-family, sans-serif)",
-      }}
-    >
+    <div className="t4s-whatsapp-floating-widget">
       {/* Expanded Chat Popup Window */}
       {isOpen && (
         <div
@@ -30,7 +22,8 @@ export default function WhatsAppFloatingButton() {
             position: "absolute",
             bottom: 74,
             right: 0,
-            width: "clamp(300px, 90vw, 360px)",
+            width: "clamp(280px, calc(100vw - 32px), 360px)",
+            maxWidth: "calc(100vw - 32px)",
             backgroundColor: "#ffffff",
             borderRadius: 18,
             boxShadow: "0 16px 40px rgba(0, 0, 0, 0.18)",

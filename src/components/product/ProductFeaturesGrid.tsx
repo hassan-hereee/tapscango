@@ -48,8 +48,8 @@ export default function ProductFeaturesGrid({ product }: ProductFeaturesGridProp
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 24,
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
+            gap: "clamp(16px, 3vw, 24px)",
           }}
         >
           {features.map((feature, idx) => (
@@ -57,7 +57,7 @@ export default function ProductFeaturesGrid({ product }: ProductFeaturesGridProp
               key={idx}
               style={{
                 backgroundColor: "#ffffff",
-                padding: "28px 24px",
+                padding: "clamp(20px, 4vw, 28px) clamp(18px, 3.5vw, 24px)",
                 borderRadius: 16,
                 border: "1px solid #e2e8f0",
                 boxShadow: "0 4px 16px rgba(0, 0, 0, 0.03)",

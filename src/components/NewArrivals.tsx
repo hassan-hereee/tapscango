@@ -46,8 +46,8 @@ export default function NewArrivals() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 28,
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+            gap: "clamp(16px, 3vw, 28px)",
           }}
         >
           {PRODUCTS.map((product) => {

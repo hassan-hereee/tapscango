@@ -63,8 +63,8 @@ export default function ProductHowItWorks() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 28,
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "clamp(18px, 3vw, 28px)",
             position: "relative",
           }}
         >
@@ -73,7 +73,7 @@ export default function ProductHowItWorks() {
               key={idx}
               style={{
                 backgroundColor: "#f8fafc",
-                padding: "36px 28px",
+                padding: "clamp(24px, 4vw, 36px) clamp(18px, 3.5vw, 28px)",
                 borderRadius: 18,
                 border: "1px solid #e2e8f0",
                 display: "flex",
