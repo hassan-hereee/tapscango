@@ -32,9 +32,21 @@ export async function loginWithGoogle() {
     body: JSON.stringify({ idToken }),
   });
 
-  const data = await response.json();
-  if (!response.ok || !data.success) {
-    throw new Error(data.error || "Failed to authenticate with Google.");
+  const text = await response.text();
+  let data: any = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    // Non-JSON response (e.g. server crash or HTML error page)
+  }
+
+  if (!response.ok || !data || !data.success) {
+    const errorMsg =
+      data?.error ||
+      (response.status === 500
+        ? "Server configuration error: Please check your MongoDB and Firebase Admin credentials in environment variables."
+        : `Authentication failed (status ${response.status}).`);
+    throw new Error(errorMsg);
   }
 
   return { firebaseUser: result.user, idToken, session: data };

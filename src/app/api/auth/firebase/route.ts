@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminAuth } from "@/lib/firebase-admin";
+import { getAdminAuth, adminAuth } from "@/lib/firebase-admin";
 import { connectToDatabase } from "@/lib/db";
 import User from "@/models/User";
 import { signAuthToken, getAuthCookieOptions } from "@/lib/jwt";
@@ -19,19 +19,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!adminAuth) {
+    const auth = getAdminAuth() || adminAuth;
+    if (!auth) {
       return NextResponse.json(
         {
           success: false,
           error:
-            "Firebase Admin is not configured. Please add your FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY in .env.local",
+            "Firebase Admin is not configured on the server. Please ensure FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY are set in your environment variables.",
         },
         { status: 500 }
       );
     }
 
     // 1. Verify Firebase ID Token
-    const decodedToken = await adminAuth.verifyIdToken(idToken);
+    const decodedToken = await auth.verifyIdToken(idToken);
     const email = decodedToken.email?.toLowerCase().trim();
 
     if (!email) {
