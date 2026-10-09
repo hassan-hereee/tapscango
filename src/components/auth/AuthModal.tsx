@@ -207,7 +207,6 @@ export default function AuthModal() {
 
         {/* Brand Header */}
         <div className="tap-auth-header">
-          <div className="tap-auth-badge">TAPSCAN AUTHENTICATION</div>
           <h2 className="tap-auth-title">
             {authModalView === "login" && "Welcome back"}
             {authModalView === "signup" && "Create your account"}
