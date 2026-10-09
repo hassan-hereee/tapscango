@@ -1,0 +1,349 @@
+{
+  "info": {
+    "_postman_id": "tapscan-auth-flow-v1",
+    "name": "TapScan.pk - Production Auth Flow",
+    "description": "Production standard authentication APIs for TapScan (Next.js 16 + MongoDB Mongoose).\nIncludes Signup, Email Confirmation, Login, Profile (/me), Forgot Password, Reset Password, Change Password, and Logout.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "verificationToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "resetToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Signup (Register New User)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.preview && jsonData.data.preview.rawToken) {",
+              "    pm.collectionVariables.set('verificationToken', jsonData.data.preview.rawToken);",
+              "    console.log('Saved verificationToken:', jsonData.data.preview.rawToken);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Ali Hassan\",\n  \"email\": \"customer@tapscan.pk\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/signup",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "signup"]
+        },
+        "description": "Creates a new user in MongoDB, hashes password with bcrypt, and generates email verification token."
+      }
+    },
+    {
+      "name": "2. Confirm Email (POST JSON)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.token) {",
+              "    pm.collectionVariables.set('authToken', jsonData.data.token);",
+              "    console.log('Saved authToken:', jsonData.data.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"token\": \"{{verificationToken}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/confirm-email",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "confirm-email"]
+        },
+        "description": "Verifies email using SHA-256 token hash lookup, activates user account, and issues auth session token."
+      }
+    },
+    {
+      "name": "3. Confirm Email (GET Web Link)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/confirm-email?token={{verificationToken}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "confirm-email"],
+          "query": [
+            {
+              "key": "token",
+              "value": "{{verificationToken}}"
+            }
+          ]
+        },
+        "description": "Simulates clicking verification link in browser or email client."
+      }
+    },
+    {
+      "name": "4. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.token) {",
+              "    pm.collectionVariables.set('authToken', jsonData.data.token);",
+              "    console.log('Saved authToken:', jsonData.data.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"customer@tapscan.pk\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Authenticates user against MongoDB bcrypt hash, checks email verification, and returns JWT token + sets httpOnly cookie."
+      }
+    },
+    {
+      "name": "5. Get Profile /me (Protected Route)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        },
+        "description": "Protected endpoint testing JWT token authentication via Authorization: Bearer <token>."
+      }
+    },
+    {
+      "name": "6. Change Password (Authenticated User)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"currentPassword\": \"Password123!\",\n  \"newPassword\": \"NewSecurePass456!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/change-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "change-password"]
+        },
+        "description": "Allows logged-in users to change their password by verifying current password first."
+      }
+    },
+    {
+      "name": "7. Forgot Password (Request Reset)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.preview && jsonData.data.preview.rawToken) {",
+              "    pm.collectionVariables.set('resetToken', jsonData.data.preview.rawToken);",
+              "    console.log('Saved resetToken:', jsonData.data.preview.rawToken);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"customer@tapscan.pk\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/forgot-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "forgot-password"]
+        },
+        "description": "Generates 1-hour password reset token and sends email (or returns in preview for testing)."
+      }
+    },
+    {
+      "name": "8. Reset Password (Submit New Password)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.token) {",
+              "    pm.collectionVariables.set('authToken', jsonData.data.token);",
+              "    console.log('Saved new authToken:', jsonData.data.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"BrandNewPassword789!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/reset-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "reset-password"]
+        },
+        "description": "Validates reset token against SHA-256 hash in DB, sets new password, clears token, and issues fresh login session."
+      }
+    },
+    {
+      "name": "9. Logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Clears httpOnly authentication cookie."
+      }
+    },
+    {
+      "name": "10. Google OAuth Login URL (JSON)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/google?format=json",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "google"],
+          "query": [
+            {
+              "key": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "description": "Returns the generated Google OAuth 2.0 consent screen URL based on your GOOGLE_CLIENT_ID."
+      }
+    },
+    {
+      "name": "11. Firebase Auth (Verify ID Token & Sync)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.token) {",
+              "    pm.collectionVariables.set('authToken', jsonData.data.token);",
+              "    console.log('Saved authToken from Firebase:', jsonData.data.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idToken\": \"YOUR_FIREBASE_ID_TOKEN\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/firebase",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "firebase"]
+        },
+        "description": "Verifies Firebase ID token, syncs user into MongoDB, and issues TapScan JWT session cookie."
+      }
+    }
+  ]
+}
