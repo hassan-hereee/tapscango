@@ -139,7 +139,7 @@ export default function AuthModal() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotEmail.trim() }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       setIsLoading(false);
 
       if (!res.ok || !data.success) {

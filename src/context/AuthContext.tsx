@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await fetch("/api/auth/me", {
         headers: { "Cache-Control": "no-cache" },
       });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
       if (response.ok && data.success && data.data?.user) {
         setUser(data.data.user);
       } else {
@@ -91,10 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success) {
-        return { success: false, error: data.error || "Login failed" };
+        return { success: false, error: data.error || `Login failed (status ${res.status})` };
       }
 
       setUser(data.data.user);
@@ -113,10 +113,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success) {
-        return { success: false, error: data.error || "Signup failed" };
+        return { success: false, error: data.error || `Signup failed (status ${res.status})` };
       }
 
       return {
