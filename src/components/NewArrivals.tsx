@@ -4,86 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export interface Product {
-  id: number;
-  title: string;
-  slug: string;
-  price: number;
-  compareAtPrice: number;
-  image: string;
-  badge?: string;
-  rating: number;
-  reviewsCount: number;
-}
-
-export const PRODUCTS: Product[] = [
-  {
-    id: 1,
-    title: "Smart NFC Google Review QR Code Standee | Premium edition",
-    slug: "google-review-qr-code-standee",
-    price: 2700,
-    compareAtPrice: 3000,
-    image: "/products/product-1.jpg",
-    badge: "-10%",
-    rating: 5,
-    reviewsCount: 48,
-  },
-  {
-    id: 2,
-    title: "Smart NFC 4-in-1 Qr code Standee With 3D Cut Acrylic Icons",
-    slug: "smart-nfc-4-in-1-qr-code-standee",
-    price: 3999,
-    compareAtPrice: 4999,
-    image: "/products/product-2.jpg",
-    badge: "-20%",
-    rating: 5,
-    reviewsCount: 62,
-  },
-  {
-    id: 3,
-    title: "Smart NFC 3-in-1 QR Code Standee with 3D Cut Acrylic Icons | Vertical Premium edition",
-    slug: "smart-nfc-3-in-1-qr-code-standee",
-    price: 3700,
-    compareAtPrice: 4500,
-    image: "/products/product-3.jpg",
-    badge: "-18%",
-    rating: 5,
-    reviewsCount: 35,
-  },
-  {
-    id: 4,
-    title: "Smart NFC 2-in-1 Qr code Standee With 3D Cut Acrylic Icons",
-    slug: "smart-nfc-qr-standee-3d-acrylic",
-    price: 3700,
-    compareAtPrice: 4000,
-    image: "/products/product-4.jpg",
-    badge: "-8%",
-    rating: 5,
-    reviewsCount: 29,
-  },
-  {
-    id: 5,
-    title: "Premium Smart NFC 3QR Table Top Standee | Social Media Theme Edition",
-    slug: "premium-smart-nfc-3qr-table-top-standee-social-media-theme-edition",
-    price: 4000,
-    compareAtPrice: 4500,
-    image: "/products/product-5.webp",
-    badge: "-11%",
-    rating: 5,
-    reviewsCount: 41,
-  },
-  {
-    id: 6,
-    title: "Premium - Dental Tooth Shaped NFC Single QR Standee - Google Review | Instagram",
-    slug: "premium-dental-tooth-shaped-nfc-single-qr-standee-google-review-instagram",
-    price: 4000,
-    compareAtPrice: 4300,
-    image: "/products/product-6.webp",
-    badge: "-7%",
-    rating: 5,
-    reviewsCount: 22,
-  },
-];
+import { PRODUCTS, type Product } from "@/data/products";
+export { PRODUCTS, type Product };
 
 export default function NewArrivals() {
   const [addedId, setAddedId] = useState<number | null>(null);
@@ -177,7 +99,7 @@ export default function NewArrivals() {
                   }}
                 >
                   <Image
-                    src={product.image}
+                    src={product.image || product.images?.[0] || "/products/product-1.jpg"}
                     alt={product.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

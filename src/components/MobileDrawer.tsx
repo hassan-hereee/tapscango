@@ -162,10 +162,16 @@ export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDr
             <span>🇵🇰</span>
             <span>Pakistan’s #1 Smart Stand Solution</span>
           </div>
-          <div className="t4s-drawer-contact-item">
+          <a
+            href="https://wa.me/923274780117"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="t4s-drawer-contact-item"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
             <span>📞</span>
-            <span>Support & WhatsApp: Available 24/7</span>
-          </div>
+            <span>WhatsApp: 0327 4780117</span>
+          </a>
           <div style={{ marginTop: 12 }}>
             <Link
               href="/account"

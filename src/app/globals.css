@@ -920,3 +920,9 @@ img {
   transform: scale(1.08);
 }
 
+@media (max-width: 640px) {
+  .t4s-btn-text-desktop {
+    display: none;
+  }
+}
+
