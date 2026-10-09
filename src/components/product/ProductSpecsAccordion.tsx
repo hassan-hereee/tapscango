@@ -93,17 +93,16 @@ export default function ProductSpecsAccordion({ product }: ProductSpecsAccordion
                 {product.specs?.map((spec, idx) => (
                   <div
                     key={idx}
+                    className="t4s-pdp-spec-row"
                     style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "16px 24px",
+                      padding: "clamp(12px, 2.5vw, 16px) clamp(16px, 3vw, 24px)",
                       borderBottom: idx !== product.specs.length - 1 ? "1px solid #edf2f7" : "none",
                       backgroundColor: idx % 2 === 0 ? "#ffffff" : "#f8fafc",
                       fontSize: 14,
                     }}
                   >
                     <span style={{ fontWeight: 600, color: "#475569" }}>{spec.label}</span>
-                    <span style={{ fontWeight: 700, color: "#1e293b", textAlign: "right" }}>{spec.value}</span>
+                    <span style={{ fontWeight: 700, color: "#1e293b" }}>{spec.value}</span>
                   </div>
                 ))}
               </div>
@@ -117,13 +116,13 @@ export default function ProductSpecsAccordion({ product }: ProductSpecsAccordion
                 backgroundColor: "#f8fafc",
                 borderRadius: 16,
                 border: "1px solid #e2e8f0",
-                padding: "32px 28px",
+                padding: "clamp(20px, 4vw, 32px) clamp(16px, 3.5vw, 28px)",
               }}
             >
               <h3 style={{ fontSize: 18, fontWeight: 700, color: "#1e293b", marginBottom: 16 }}>
                 Everything You Need to Start Collecting Reviews Today:
               </h3>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 16 }}>
                 {product.boxContents?.map((item, idx) => (
                   <div
                     key={idx}
@@ -152,10 +151,10 @@ export default function ProductSpecsAccordion({ product }: ProductSpecsAccordion
                 backgroundColor: "#f8fafc",
                 borderRadius: 16,
                 border: "1px solid #e2e8f0",
-                padding: "32px 28px",
+                padding: "clamp(20px, 4vw, 32px) clamp(16px, 3.5vw, 28px)",
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                gap: 24,
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
+                gap: 20,
               }}
             >
               <div style={{ backgroundColor: "#ffffff", padding: "20px", borderRadius: 12, border: "1px solid #e2e8f0" }}>

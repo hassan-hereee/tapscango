@@ -96,7 +96,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
       ? `\n• *Google Link:* ${reviewLink.trim()}`
       : "";
 
-    const message = `Salam TapScan.pk! I want to order this product with Cash on Delivery:\n\n*Product:* ${product.title}\n*Quantity:* ${quantity}\n${variantSummary}${customText}${linkText}\n\n*Total Amount:* Rs. ${totalPrice.toLocaleString()}\n\nPlease confirm availability and dispatch!`;
+    const message = `Salam, I would like to place an order for:\n\n• *Product:* ${product.title}\n• *Quantity:* ${quantity}\n${variantSummary}${customText}${linkText}\n• *Total Price:* Rs. ${totalPrice.toLocaleString()} (Cash on Delivery)\n\nPlease let me know how to proceed with the order confirmation.`;
 
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/923274780117?text=${encoded}`, "_blank");
@@ -377,7 +377,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div className="t4s-pdp-qty-row">
           {/* Stepper */}
           <div
             style={{
@@ -387,6 +387,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
               borderRadius: 8,
               backgroundColor: "#ffffff",
               overflow: "hidden",
+              alignSelf: "flex-start",
             }}
           >
             <button
@@ -439,7 +440,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
           </div>
 
           {/* Bundle incentive pills */}
-          <div style={{ display: "flex", gap: 8, flex: 1 }}>
+          <div className="t4s-pdp-bundle-pills">
             <button
               type="button"
               onClick={() => setQuantity(2)}
@@ -557,10 +558,8 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
 
       {/* Trust Checklist */}
       <div
+        className="t4s-pdp-trust-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 12,
           padding: "16px",
           backgroundColor: "#f8fafc",
           borderRadius: 12,

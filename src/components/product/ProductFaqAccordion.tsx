@@ -55,7 +55,7 @@ export default function ProductFaqAccordion({ product }: ProductFaqAccordionProp
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
                     style={{
                       width: "100%",
-                      padding: "18px 24px",
+                      padding: "clamp(14px, 3vw, 18px) clamp(16px, 3.5vw, 24px)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
@@ -86,7 +86,7 @@ export default function ProductFaqAccordion({ product }: ProductFaqAccordionProp
                   {isOpen && (
                     <div
                       style={{
-                        padding: "0 24px 20px 24px",
+                        padding: "0 clamp(16px, 3.5vw, 24px) 20px clamp(16px, 3.5vw, 24px)",
                         fontSize: 14,
                         color: "#475569",
                         lineHeight: 1.65,

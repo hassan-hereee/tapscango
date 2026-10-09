@@ -133,8 +133,8 @@ export default function ProductGallery({ images, title, badge }: ProductGalleryP
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(${Math.min(images.length, 5)}, 1fr)`,
-            gap: 12,
+            gridTemplateColumns: `repeat(${Math.min(images.length, 5)}, minmax(0, 1fr))`,
+            gap: "clamp(6px, 2vw, 12px)",
           }}
         >
           {images.map((img, idx) => {
@@ -176,29 +176,29 @@ export default function ProductGallery({ images, title, badge }: ProductGalleryP
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 10,
-          padding: "14px 12px",
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          gap: "clamp(6px, 1.5vw, 10px)",
+          padding: "clamp(10px, 2vw, 14px) clamp(8px, 2vw, 12px)",
           backgroundColor: "#f8fafc",
           borderRadius: 12,
           border: "1px solid #edf2f7",
           textAlign: "center",
         }}
       >
-        <div>
+        <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 16, marginBottom: 2 }}>💎</div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#1e293b" }}>4mm Cast Acrylic</div>
-          <div style={{ fontSize: 10, color: "#64748b" }}>Diamond polished</div>
+          <div style={{ fontSize: "clamp(9px, 2vw, 11px)", fontWeight: 700, color: "#1e293b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>4mm Cast Acrylic</div>
+          <div style={{ fontSize: "clamp(8px, 1.8vw, 10px)", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Diamond polished</div>
         </div>
-        <div>
+        <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 16, marginBottom: 2 }}>⚡</div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#1e293b" }}>Instant NFC Tap</div>
-          <div style={{ fontSize: 10, color: "#64748b" }}>No app required</div>
+          <div style={{ fontSize: "clamp(9px, 2vw, 11px)", fontWeight: 700, color: "#1e293b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Instant NFC Tap</div>
+          <div style={{ fontSize: "clamp(8px, 1.8vw, 10px)", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>No app required</div>
         </div>
-        <div>
+        <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 16, marginBottom: 2 }}>🇵🇰</div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#1e293b" }}>Cash on Delivery</div>
-          <div style={{ fontSize: 10, color: "#64748b" }}>All over Pakistan</div>
+          <div style={{ fontSize: "clamp(9px, 2vw, 11px)", fontWeight: 700, color: "#1e293b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Cash on Delivery</div>
+          <div style={{ fontSize: "clamp(8px, 1.8vw, 10px)", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>All Pakistan</div>
         </div>
       </div>
     </div>

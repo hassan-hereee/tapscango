@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tapscan.pk"),
   title: "Pakistan's Smart Qr code Stand: Get reviews, social follows & Payment – TapScan.pk",
   description:
     "Boost your business with Tapscan.pk — Pakistan’s #1 NFC and QR code stand solution for instant Google reviews, quick social media follows, and seamless scan-to-pay payments.",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 import { CartProvider } from "@/context/CartContext";
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 
 export default function RootLayout({
   children,
@@ -25,7 +27,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <WhatsAppFloatingButton />
+        </CartProvider>
       </body>
     </html>
   );

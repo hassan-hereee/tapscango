@@ -60,8 +60,8 @@ export default function ExploreCollections() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 28,
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "clamp(16px, 3vw, 28px)",
           }}
         >
           {COLLECTIONS.map((col) => (
@@ -105,17 +105,18 @@ export default function ExploreCollections() {
               <div
                 style={{
                   position: "absolute",
-                  bottom: 24,
-                  left: 24,
-                  right: 24,
+                  bottom: "clamp(14px, 3vw, 24px)",
+                  left: "clamp(14px, 3vw, 24px)",
+                  right: "clamp(14px, 3vw, 24px)",
                   display: "flex",
                   alignItems: "flex-end",
                   justifyContent: "space-between",
                   color: "#ffffff",
+                  gap: 10,
                 }}
               >
-                <div>
-                  <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4, color: "#ffffff" }}>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <h3 style={{ fontSize: "clamp(17px, 2.8vw, 22px)", fontWeight: 700, marginBottom: 4, color: "#ffffff", lineHeight: 1.25 }}>
                     {col.title}
                   </h3>
                   <p style={{ fontSize: 13, opacity: 0.9 }}>{col.count}</p>
@@ -125,14 +126,15 @@ export default function ExploreCollections() {
                   style={{
                     backgroundColor: "#ffffff",
                     color: "#0b69b3",
-                    padding: "8px 16px",
+                    padding: "7px 14px",
                     borderRadius: 20,
-                    fontSize: 13,
+                    fontSize: 12.5,
                     fontWeight: 700,
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
                     boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    flexShrink: 0,
                   }}
                 >
                   View

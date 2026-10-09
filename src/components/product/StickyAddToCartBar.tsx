@@ -27,7 +27,7 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
   };
 
   const handleWhatsApp = () => {
-    const message = `Salam TapScan.pk! I want to order "${product.title}" (Rs. ${product.price.toLocaleString()}) via Cash on Delivery.`;
+    const message = `Salam, I would like to order the "${product.title}" (Rs. ${product.price.toLocaleString()}). Please guide me with the order confirmation.`;
     window.open(`https://wa.me/923274780117?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -49,21 +49,21 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
       }}
     >
       <div
-        className="t4s-container"
+        className="t4s-container t4s-sticky-bar-container"
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: 16,
+          gap: 12,
         }}
       >
         {/* Left: Product Thumbnail & Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0, flex: 1 }}>
           <div
             style={{
               position: "relative",
-              width: 48,
-              height: 48,
+              width: 44,
+              height: 44,
               borderRadius: 8,
               overflow: "hidden",
               border: "1px solid #e2e8f0",
@@ -75,13 +75,14 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
               src={product.images[0] || product.image || "/products/product-1.jpg"}
               alt={product.title}
               fill
-              sizes="48px"
+              sizes="44px"
               style={{ objectFit: "cover" }}
             />
           </div>
 
-          <div style={{ minWidth: 0 }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
             <div
+              className="t4s-sticky-bar-title"
               style={{
                 fontSize: 13,
                 fontWeight: 700,
@@ -89,17 +90,17 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                maxWidth: "clamp(180px, 40vw, 420px)",
+                maxWidth: "clamp(110px, 35vw, 420px)",
               }}
             >
               {product.title}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: "#08497e" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 13, fontWeight: 800, color: "#08497e" }}>
                 Rs. {product.price.toLocaleString()}
               </span>
               {product.compareAtPrice > product.price && (
-                <span style={{ fontSize: 12, color: "#94a3b8", textDecoration: "line-through" }}>
+                <span style={{ fontSize: 11, color: "#94a3b8", textDecoration: "line-through" }}>
                   Rs. {product.compareAtPrice.toLocaleString()}
                 </span>
               )}
@@ -113,6 +114,7 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
           <button
             type="button"
             onClick={handleWhatsApp}
+            className="t4s-sticky-bar-btn"
             style={{
               backgroundColor: "#25D366",
               color: "#ffffff",
@@ -137,6 +139,7 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
           <button
             type="button"
             onClick={handleAdd}
+            className="t4s-sticky-bar-btn"
             style={{
               backgroundColor: "#0b69b3",
               color: "#ffffff",

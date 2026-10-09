@@ -108,20 +108,17 @@ export default function ProductReviewsSection({ product }: ProductReviewsSection
 
           {/* Rating Summary Card */}
           <div
+            className="t4s-pdp-reviews-summary-grid"
             style={{
               backgroundColor: "#ffffff",
-              padding: "32px",
+              padding: "clamp(20px, 4vw, 32px)",
               borderRadius: 16,
               border: "1px solid #e2e8f0",
               marginBottom: 32,
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: 28,
-              alignItems: "center",
             }}
           >
             {/* Score */}
-            <div style={{ textAlign: "center", borderRight: "1px solid #f1f5f9", paddingRight: 16 }}>
+            <div className="t4s-pdp-reviews-score-box">
               <div style={{ fontSize: 48, fontWeight: 900, color: "#08497e", lineHeight: 1 }}>
                 {product.rating.toFixed(1)}
               </div>
@@ -163,7 +160,7 @@ export default function ProductReviewsSection({ product }: ProductReviewsSection
             <div
               style={{
                 backgroundColor: "#ffffff",
-                padding: "32px",
+                padding: "clamp(18px, 4vw, 32px)",
                 borderRadius: 16,
                 border: "2px solid #08497e",
                 marginBottom: 32,
@@ -208,7 +205,7 @@ export default function ProductReviewsSection({ product }: ProductReviewsSection
                     </div>
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))", gap: 16 }}>
                     <div>
                       <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#334155", marginBottom: 4 }}>
                         Your Full Name:
@@ -344,7 +341,7 @@ export default function ProductReviewsSection({ product }: ProductReviewsSection
                 key={rev.id}
                 style={{
                   backgroundColor: "#ffffff",
-                  padding: "24px 28px",
+                  padding: "clamp(16px, 3.5vw, 24px) clamp(16px, 4vw, 28px)",
                   borderRadius: 14,
                   border: "1px solid #e2e8f0",
                   display: "flex",
