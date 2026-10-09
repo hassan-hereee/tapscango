@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface MobileDrawerProps {
 
 export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDrawerProps) {
   const [shopOpen, setShopOpen] = useState(false);
+  const { user, openLoginModal, logout } = useAuth();
 
   useEffect(() => {
     if (isOpen) {
@@ -173,24 +175,75 @@ export default function MobileDrawer({ isOpen, onClose, onOpenSearch }: MobileDr
             <span>WhatsApp: 0327 4780117</span>
           </a>
           <div style={{ marginTop: 12 }}>
-            <Link
-              href="/account"
-              onClick={onClose}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#0b69b3",
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <span>Login / Account</span>
-            </Link>
+            {user ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <Link
+                  href="/account"
+                  onClick={onClose}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "#0b69b3",
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <span>My Account ({user.name})</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    logout();
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "#ef4444",
+                    textAlign: "left",
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  openLoginModal();
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "#0b69b3",
+                  width: "100%",
+                  textAlign: "left",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Login / Sign Up</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

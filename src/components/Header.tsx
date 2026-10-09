@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchModal from "./SearchModal";
@@ -8,12 +8,28 @@ import CartDrawer from "./CartDrawer";
 import MobileDrawer from "./MobileDrawer";
 
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const [isStuck, setIsStuck] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const accountMenuRef = useRef<HTMLDivElement>(null);
+
   const { totalItems, setIsCartOpen } = useCart();
+  const { user, openLoginModal, logout } = useAuth();
+
+  // Close account menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (accountMenuRef.current && !accountMenuRef.current.contains(e.target as Node)) {
+        setIsAccountMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -176,26 +192,86 @@ export default function Header() {
               </button>
 
               {/* Account Button (Desktop/Tablet) */}
-              <Link
-                href="/account"
-                className="t4s-action-btn t4s-account-btn"
-                aria-label="My Account"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  width="24"
-                  height="24"
+              <div className="tap-account-dropdown-wrap" ref={accountMenuRef}>
+                <button
+                  type="button"
+                  className="t4s-action-btn t4s-account-btn"
+                  onClick={() => {
+                    if (user) {
+                      setIsAccountMenuOpen(!isAccountMenuOpen);
+                    } else {
+                      openLoginModal();
+                    }
+                  }}
+                  aria-label={user ? `Account menu for ${user.name}` : "Log In or Sign Up"}
+                  style={{ position: "relative" }}
                 >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </Link>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    stroke={user ? "#0b69b3" : "currentColor"}
+                    strokeWidth="1.5"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    width="24"
+                    height="24"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  {user && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: 4,
+                        right: 4,
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        backgroundColor: "#10b981",
+                        border: "1.5px solid #ffffff",
+                      }}
+                    />
+                  )}
+                </button>
+
+                {/* Authenticated Dropdown Menu */}
+                {user && isAccountMenuOpen && (
+                  <div className="tap-account-menu">
+                    <div className="tap-account-menu-header">
+                      <div className="tap-account-menu-name">{user.name}</div>
+                      <div className="tap-account-menu-email">{user.email}</div>
+                    </div>
+                    <Link
+                      href="/account"
+                      className="tap-account-menu-item"
+                      onClick={() => setIsAccountMenuOpen(false)}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      <span>Dashboard & Account</span>
+                    </Link>
+                    <button
+                      type="button"
+                      className="tap-account-menu-item is-danger"
+                      onClick={() => {
+                        setIsAccountMenuOpen(false);
+                        logout();
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                      </svg>
+                      <span>Log Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
 
               {/* Cart Button with Count Badge */}
               <button

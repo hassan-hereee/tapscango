@@ -1104,4 +1104,520 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   TAPSCAN AUTHENTICATION SYSTEM (MODAL & PAGES)
+   ========================================================================== */
+
+/* Modal Overlay & Backdrop */
+.tap-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(8, 17, 30, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: tapFadeIn 0.22s ease-out forwards;
+}
+
+@keyframes tapFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes tapScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes tapSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Auth Card Container */
+.tap-auth-card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 25px 60px -12px rgba(11, 35, 65, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 36px 32px;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: tapScaleUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (max-width: 540px) {
+  .tap-auth-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+}
+
+/* Close Button */
+.tap-auth-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #64748b;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.tap-auth-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Brand Header */
+.tap-auth-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.tap-auth-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #0b69b3;
+  background: #e0f2fe;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.tap-auth-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.tap-auth-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Switcher Tabs */
+.tap-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.tap-auth-tab {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 9px;
+  color: #64748b;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.tap-auth-tab.is-active {
+  background: #ffffff;
+  color: #0b69b3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Error Banner */
+.tap-auth-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  animation: tapFadeIn 0.2s ease;
+}
+
+/* Google Button */
+.tap-google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.tap-google-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tap-google-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.tap-auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tap-auth-divider::before,
+.tap-auth-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid #e2e8f0;
+}
+
+.tap-auth-divider span {
+  padding: 0 12px;
+}
+
+/* Form Groups & Inputs */
+.tap-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tap-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tap-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.tap-form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tap-forgot-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0b69b3;
+  padding: 0;
+}
+
+.tap-forgot-link:hover {
+  text-decoration: underline;
+}
+
+.tap-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tap-input-icon {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.tap-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 42px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.tap-input:focus {
+  border-color: #0b69b3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(11, 105, 179, 0.15);
+}
+
+.tap-password-toggle {
+  position: absolute;
+  right: 10px;
+  padding: 6px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.tap-password-toggle:hover {
+  color: #0f172a;
+}
+
+/* Password Strength Bar */
+.tap-password-strength-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tap-strength-bar {
+  flex: 1;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tap-strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.tap-strength-label {
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 48px;
+  text-align: right;
+}
+
+.tap-terms-note {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.tap-terms-note a {
+  color: #0b69b3;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* Primary Action Buttons */
+.tap-btn-primary {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0b69b3 0%, #08497e 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 14px rgba(11, 105, 179, 0.32);
+  transition: all 0.2s ease;
+}
+
+.tap-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(11, 105, 179, 0.42);
+}
+
+.tap-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.tap-btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.tap-back-btn {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 8px;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.tap-back-btn:hover {
+  color: #0b69b3;
+}
+
+/* Success Confirmation Screen */
+.tap-auth-success-screen {
+  text-align: center;
+  padding: 16px 8px;
+}
+
+.tap-success-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #e0f2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.tap-success-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.tap-success-desc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.tap-success-subdesc {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.tap-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: tapSpin 0.7s linear infinite;
+}
+
+.tap-google-btn .tap-spinner {
+  border: 2.5px solid #cbd5e1;
+  border-top-color: #0b69b3;
+}
+
+/* Standalone Auth Pages Wrapper */
+.tap-auth-page-container {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(circle at 10% 20%, rgba(11, 105, 179, 0.05) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(217, 161, 20, 0.04) 0%, transparent 40%),
+              #f8fafc;
+}
+
+.tap-auth-page-box {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Account Profile Dropdown (Header) */
+.tap-account-dropdown-wrap {
+  position: relative;
+}
+
+.tap-account-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  z-index: 1000;
+  animation: tapScaleUp 0.18s ease-out forwards;
+}
+
+.tap-account-menu-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 4px;
+}
+
+.tap-account-menu-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tap-account-menu-email {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tap-account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.tap-account-menu-item:hover {
+  background: #f1f5f9;
+  color: #0b69b3;
+}
+
+.tap-account-menu-item.is-danger {
+  color: #ef4444;
+}
+
+.tap-account-menu-item.is-danger:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+
 

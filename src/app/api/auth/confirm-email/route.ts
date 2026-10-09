@@ -74,6 +74,32 @@ export async function GET(request: NextRequest) {
     const token = searchParams.get("token");
 
     const result = await processVerification(token);
+
+    // If request comes from a browser clicking the link in an email, redirect to UI
+    const accept = request.headers.get("accept") || "";
+    if (accept.includes("text/html")) {
+      const redirectUrl = new URL(
+        result.status === 200
+          ? "/auth/verify-email?status=success"
+          : `/auth/verify-email?status=error&message=${encodeURIComponent(
+              result.body.error || "Verification failed."
+            )}`,
+        request.url
+      );
+      const redirectResponse = NextResponse.redirect(redirectUrl);
+      if (result.authToken) {
+        const cookieOptions = getAuthCookieOptions();
+        redirectResponse.cookies.set(cookieOptions.name, result.authToken, {
+          httpOnly: cookieOptions.httpOnly,
+          secure: cookieOptions.secure,
+          sameSite: cookieOptions.sameSite,
+          path: cookieOptions.path,
+          maxAge: cookieOptions.maxAge,
+        });
+      }
+      return redirectResponse;
+    }
+
     const response = NextResponse.json(result.body, { status: result.status });
 
     if (result.authToken) {

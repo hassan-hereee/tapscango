@@ -33,6 +33,10 @@ export async function loginWithGoogle() {
   });
 
   const data = await response.json();
+  if (!response.ok || !data.success) {
+    throw new Error(data.error || "Failed to authenticate with Google.");
+  }
+
   return { firebaseUser: result.user, idToken, session: data };
 }
 
