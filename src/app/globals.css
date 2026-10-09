@@ -924,5 +924,32 @@ img {
   .t4s-btn-text-desktop {
     display: none;
   }
+  .t4s-whatsapp-text {
+    display: none;
+  }
+  .t4s-whatsapp-header-badge {
+    padding: 6px 8px !important;
+  }
+  .t4s-announcement-whatsapp {
+    display: none !important;
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
