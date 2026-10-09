@@ -3,18 +3,39 @@ import { getAuth, Auth } from "firebase-admin/auth";
 
 let adminApp: App | null = null;
 
-if (!getApps().length) {
-  const projectId =
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ||
-    process.env.FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+export function getAdminAuth(): Auth | null {
+  try {
+    if (getApps().length > 0) {
+      return getAuth(getApps()[0]);
+    }
 
-  if (privateKey) {
+    const projectId =
+      process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ||
+      process.env.FIREBASE_PROJECT_ID;
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+    let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+
+    if (!projectId) {
+      console.warn("⚠️ Firebase Admin: NEXT_PUBLIC_FIREBASE_PROJECT_ID is missing.");
+      return null;
+    }
+
+    if (!clientEmail || !privateKey) {
+      console.warn("⚠️ Firebase Admin: FIREBASE_CLIENT_EMAIL or FIREBASE_PRIVATE_KEY is missing.");
+      return null;
+    }
+
+    // Sanitize privateKey: strip surrounding quotes if present from .env or Vercel
+    privateKey = privateKey.trim();
+    if (
+      (privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+      (privateKey.startsWith("'") && privateKey.endsWith("'"))
+    ) {
+      privateKey = privateKey.slice(1, -1);
+    }
+    // Replace escaped newlines with actual newline characters
     privateKey = privateKey.replace(/\\n/g, "\n");
-  }
 
-  if (clientEmail && privateKey && projectId) {
     adminApp = initializeApp({
       credential: cert({
         projectId,
@@ -22,13 +43,13 @@ if (!getApps().length) {
         privateKey,
       }),
     });
-  } else if (projectId) {
-    adminApp = initializeApp({
-      projectId,
-    });
+
+    return getAuth(adminApp);
+  } catch (error: any) {
+    console.error("❌ Firebase Admin initialization failed:", error.message || error);
+    return null;
   }
-} else {
-  adminApp = getApps()[0];
 }
 
-export const adminAuth: Auth | null = adminApp ? getAuth(adminApp) : null;
+export const adminAuth: Auth | null = getAdminAuth();
+
