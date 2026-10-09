@@ -129,7 +129,7 @@ export default function Header() {
             <div className="t4s-header-actions" style={{ display: "flex", alignItems: "center", gap: 12 }}>
               {/* WhatsApp Quick Order Link */}
               <a
-                href="https://wa.me/923274780117?text=Salam%20TapScan!%20I%20have%20an%20order%20query."
+                href="https://wa.me/923274780117?text=Salam,%20I%20would%20like%20to%20inquire%20about%20your%20smart%20NFC%20and%20QR%20stands."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="t4s-whatsapp-header-badge"

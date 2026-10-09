@@ -25,7 +25,7 @@ export default function AnnouncementBar() {
         </Link>
 
         <a
-          href="https://wa.me/923274780117?text=Salam%20TapScan!%20I%20want%20to%20order%20or%20inquire%20about%20stands."
+          href="https://wa.me/923274780117?text=Salam,%20I%20would%20like%20to%20inquire%20about%20placing%20an%20order."
           target="_blank"
           rel="noopener noreferrer"
           style={{

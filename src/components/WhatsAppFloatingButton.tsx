@@ -8,7 +8,7 @@ export default function WhatsAppFloatingButton() {
   const displayPhone = "+92 327 4780117";
 
   const handleStartChat = (customText?: string) => {
-    const text = customText || "Salam TapScan.pk! I would like to inquire about your Smart NFC & QR Stands.";
+    const text = customText || "Salam, I would like to get some information regarding your smart NFC and QR stands.";
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
   };
@@ -116,7 +116,7 @@ export default function WhatsAppFloatingButton() {
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <button
                 type="button"
-                onClick={() => handleStartChat("Salam! I want to place an order for a Smart NFC Review Standee.")}
+                onClick={() => handleStartChat("Salam, I would like to place an order. Could you please guide me?")}
                 style={{
                   backgroundColor: "#ffffff",
                   border: "1px solid #cbd5e1",
@@ -139,7 +139,7 @@ export default function WhatsAppFloatingButton() {
 
               <button
                 type="button"
-                onClick={() => handleStartChat("Salam! Can you share a 3D digital mockup with my company logo and Google review link?")}
+                onClick={() => handleStartChat("Salam, could you please share a digital mockup with my business logo and review link?")}
                 style={{
                   backgroundColor: "#ffffff",
                   border: "1px solid #cbd5e1",
@@ -162,7 +162,7 @@ export default function WhatsAppFloatingButton() {
 
               <button
                 type="button"
-                onClick={() => handleStartChat("Salam! I have an order query regarding dispatch / delivery status.")}
+                onClick={() => handleStartChat("Salam, I have an inquiry regarding my order and delivery status.")}
                 style={{
                   backgroundColor: "#ffffff",
                   border: "1px solid #cbd5e1",

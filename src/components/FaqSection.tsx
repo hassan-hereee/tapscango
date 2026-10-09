@@ -139,7 +139,7 @@ export default function FaqSection() {
             Have a different question about your business link or custom design?
           </p>
           <a
-            href="https://wa.me/923274780117?text=Salam%20TapScan!%20I%20have%20a%20question%20about%20your%20stands."
+            href="https://wa.me/923274780117?text=Salam,%20I%20have%20a%20few%20questions%20regarding%20the%20smart%20standees.%20Could%20you%20please%20guide%20me?"
             target="_blank"
             rel="noopener noreferrer"
             style={{

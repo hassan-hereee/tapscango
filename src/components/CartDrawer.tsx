@@ -31,7 +31,7 @@ export default function CartDrawer() {
       return `${idx + 1}. ${item.title} (Qty: ${item.quantity}) - Rs. ${item.price * item.quantity}${variants ? ` (${variants})` : ""}${custom}`;
     });
 
-    const message = `Hello TapScan.pk! I want to place an order:\n\n${orderLines.join("\n")}\n\n*Total Amount:* Rs. ${subtotal.toLocaleString()}\n*Payment:* Cash on Delivery\n\nPlease confirm my order details!`;
+    const message = `Salam, I would like to confirm my order:\n\n${orderLines.join("\n")}\n\n*Total Amount:* Rs. ${subtotal.toLocaleString()} (Cash on Delivery)\n\nPlease share the order confirmation and delivery schedule.`;
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/923274780117?text=${encoded}`, "_blank");
   };

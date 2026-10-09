@@ -96,7 +96,7 @@ export default function ProductBuyBox({ product, onReviewsClick }: ProductBuyBox
       ? `\n• *Google Link:* ${reviewLink.trim()}`
       : "";
 
-    const message = `Salam TapScan.pk! I want to order this product with Cash on Delivery:\n\n*Product:* ${product.title}\n*Quantity:* ${quantity}\n${variantSummary}${customText}${linkText}\n\n*Total Amount:* Rs. ${totalPrice.toLocaleString()}\n\nPlease confirm availability and dispatch!`;
+    const message = `Salam, I would like to place an order for:\n\n• *Product:* ${product.title}\n• *Quantity:* ${quantity}\n${variantSummary}${customText}${linkText}\n• *Total Price:* Rs. ${totalPrice.toLocaleString()} (Cash on Delivery)\n\nPlease let me know how to proceed with the order confirmation.`;
 
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/923274780117?text=${encoded}`, "_blank");

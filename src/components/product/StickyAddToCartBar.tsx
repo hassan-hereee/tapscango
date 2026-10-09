@@ -27,7 +27,7 @@ export default function StickyAddToCartBar({ product, visible }: StickyAddToCart
   };
 
   const handleWhatsApp = () => {
-    const message = `Salam TapScan.pk! I want to order "${product.title}" (Rs. ${product.price.toLocaleString()}) via Cash on Delivery.`;
+    const message = `Salam, I would like to order the "${product.title}" (Rs. ${product.price.toLocaleString()}). Please guide me with the order confirmation.`;
     window.open(`https://wa.me/923274780117?text=${encodeURIComponent(message)}`, "_blank");
   };
 

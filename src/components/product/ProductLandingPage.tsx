@@ -181,7 +181,7 @@ export default function ProductLandingPage({ product }: ProductLandingPageProps)
               Our design team can generate a free 3D digital mockup of your standee with your exact logo and Google review link in 15 minutes!
             </p>
             <a
-              href="https://wa.me/923274780117?text=Salam%20TapScan!%20I%20have%20a%20question%20about%20ordering%20custom%20stands."
+              href="https://wa.me/923274780117?text=Salam,%20I%20would%20like%20to%20get%20a%20custom%20design%20mockup%20with%20my%20business%20logo."
               target="_blank"
               rel="noopener noreferrer"
               style={{
