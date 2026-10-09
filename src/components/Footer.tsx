@@ -49,7 +49,7 @@ export default function Footer() {
             </p>
             <div style={{ fontSize: 13, lineHeight: 1.8, color: "#cbd5e1" }}>
               <p>📍 B3 Second Floor, 28 Band Road, Lahore 54000, Pakistan</p>
-              <p>📞 Phone / WhatsApp: <a href="tel:+923277008585" style={{ color: "#38bdf8" }}>+92 327 7008585</a></p>
+              <p>📞 Phone / WhatsApp: <a href="https://wa.me/923274780117" target="_blank" rel="noopener noreferrer" style={{ color: "#38bdf8" }}>+92 327 4780117</a></p>
               <p>✉️ Email: <a href="mailto:support@tapscan.pk" style={{ color: "#38bdf8" }}>support@tapscan.pk</a></p>
             </div>
           </div>

@@ -7,12 +7,13 @@ import SearchModal from "./SearchModal";
 import CartDrawer from "./CartDrawer";
 import MobileDrawer from "./MobileDrawer";
 
+import { useCart } from "@/context/CartContext";
+
 export default function Header() {
   const [isStuck, setIsStuck] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cartCount] = useState(0);
+  const { totalItems, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -174,7 +175,7 @@ export default function Header() {
               <button
                 className="t4s-action-btn"
                 onClick={() => setIsCartOpen(true)}
-                aria-label={`Cart with ${cartCount} items`}
+                aria-label={`Cart with ${totalItems} items`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +192,7 @@ export default function Header() {
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                <span className="t4s-cart-badge">{cartCount}</span>
+                <span className="t4s-cart-badge">{totalItems}</span>
               </button>
             </div>
           </div>
@@ -200,11 +201,7 @@ export default function Header() {
 
       {/* Interactive Modals and Drawers */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartCount={cartCount}
-      />
+      <CartDrawer />
       <MobileDrawer
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
