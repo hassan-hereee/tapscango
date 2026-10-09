@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,6 +17,34 @@ export default function AccountPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pwdLoading, setPwdLoading] = useState(false);
   const [pwdMessage, setPwdMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  // Orders State
+  const [orders, setOrders] = useState<any[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      setOrders([]);
+      setOrdersLoading(false);
+      return;
+    }
+
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch("/api/orders");
+        const data = await res.json();
+        if (res.ok && data.success && Array.isArray(data.orders)) {
+          setOrders(data.orders);
+        }
+      } catch (err) {
+        console.error("Failed to fetch user orders:", err);
+      } finally {
+        setOrdersLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [user]);
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,37 +257,155 @@ export default function AccountPage() {
                     Track your orders, view shipping status, and manage your live smart stand profiles.
                   </p>
 
-                  <div
-                    style={{
-                      background: "#f8fafc",
-                      border: "1.5px dashed #cbd5e1",
-                      borderRadius: 14,
-                      padding: "36px 20px",
-                      textAlign: "center",
-                    }}
-                  >
-                    <div style={{ fontSize: 32, marginBottom: 8 }}>📦</div>
-                    <div style={{ fontWeight: 600, color: "#334155", fontSize: 14 }}>
-                      No active orders yet
+                  {ordersLoading ? (
+                    <div style={{ padding: "40px 0", textAlign: "center" }}>
+                      <div className="tap-spinner" style={{ width: 30, height: 30, borderTopColor: "#0b69b3", borderColor: "#cbd5e1", margin: "0 auto 10px" }} />
+                      <div style={{ fontSize: 13, color: "#64748b" }}>Loading your orders...</div>
                     </div>
-                    <p style={{ color: "#64748b", fontSize: 12, marginTop: 4, marginBottom: 16 }}>
-                      Upgrade your counter or office with Pakistan&apos;s #1 smart NFC stand.
-                    </p>
-                    <Link
-                      href="/collections/all"
-                      className="tap-btn-primary"
+                  ) : orders.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                      {orders.map((order) => (
+                        <div
+                          key={order._id || order.orderNumber}
+                          style={{
+                            border: "1px solid #e2e8f0",
+                            borderRadius: 14,
+                            padding: "16px 18px",
+                            background: "#f8fafc",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                            <div>
+                              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <strong style={{ fontSize: 14, color: "#08497e" }}>{order.orderNumber}</strong>
+                                <span
+                                  style={{
+                                    fontSize: 11,
+                                    fontWeight: 700,
+                                    padding: "2px 8px",
+                                    borderRadius: 10,
+                                    background:
+                                      order.orderStatus === "delivered"
+                                        ? "#dcfce7"
+                                        : order.orderStatus === "shipped"
+                                        ? "#e0e7ff"
+                                        : "#fef3c7",
+                                    color:
+                                      order.orderStatus === "delivered"
+                                        ? "#166534"
+                                        : order.orderStatus === "shipped"
+                                        ? "#3730a3"
+                                        : "#92400e",
+                                    textTransform: "capitalize",
+                                  }}
+                                >
+                                  {order.orderStatus}
+                                </span>
+                              </div>
+                              <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
+                                {new Date(order.createdAt).toLocaleDateString("en-US", {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                })} • {order.items.length} {order.items.length === 1 ? "item" : "items"}
+                              </div>
+                            </div>
+                            <div style={{ textAlign: "right" }}>
+                              <strong style={{ fontSize: 15, color: "#0f172a" }}>
+                                Rs. {order.total.toLocaleString()}
+                              </strong>
+                              <div style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase" }}>
+                                {order.paymentMethod === "cod" ? "COD" : "Bank Transfer"}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Items Preview */}
+                          <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 12 }}>
+                            {order.items.map((it: any, idx: number) => (
+                              <div key={idx} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 12.5, color: "#334155" }}>
+                                {it.image && (
+                                  <Image
+                                    src={it.image}
+                                    alt={it.title}
+                                    width={32}
+                                    height={32}
+                                    style={{ borderRadius: 6, objectFit: "cover", border: "1px solid #e2e8f0" }}
+                                  />
+                                )}
+                                <span style={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                  {it.title} (x{it.quantity})
+                                </span>
+                                <span style={{ fontWeight: 600 }}>Rs. {(it.price * it.quantity).toLocaleString()}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Quick Actions */}
+                          <div style={{ display: "flex", gap: 10, borderTop: "1px solid #e2e8f0", paddingTop: 10 }}>
+                            <Link
+                              href={`/checkout/success?orderNumber=${order.orderNumber}`}
+                              style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: "#0b69b3",
+                                textDecoration: "none",
+                              }}
+                            >
+                              View Details →
+                            </Link>
+                            <a
+                              href={`https://wa.me/923274780117?text=Salam!%20Inquiry%20regarding%20Order%20${order.orderNumber}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: "#15803d",
+                                textDecoration: "none",
+                                marginLeft: "auto",
+                              }}
+                            >
+                              Track on WhatsApp 💬
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div
                       style={{
-                        display: "inline-flex",
-                        height: 40,
-                        padding: "0 20px",
-                        fontSize: 13,
-                        textDecoration: "none",
-                        width: "auto",
+                        background: "#f8fafc",
+                        border: "1.5px dashed #cbd5e1",
+                        borderRadius: 14,
+                        padding: "36px 20px",
+                        textAlign: "center",
                       }}
                     >
-                      Browse Collection
-                    </Link>
-                  </div>
+                      <div style={{ fontSize: 32, marginBottom: 8 }}>📦</div>
+                      <div style={{ fontWeight: 600, color: "#334155", fontSize: 14 }}>
+                        No active orders yet
+                      </div>
+                      <p style={{ color: "#64748b", fontSize: 12, marginTop: 4, marginBottom: 16 }}>
+                        Upgrade your counter or office with Pakistan&apos;s #1 smart NFC stand.
+                      </p>
+                      <Link
+                        href="/collections/all"
+                        className="tap-btn-primary"
+                        style={{
+                          display: "inline-flex",
+                          height: 40,
+                          padding: "0 20px",
+                          fontSize: 13,
+                          textDecoration: "none",
+                          width: "auto",
+                        }}
+                      >
+                        Browse Collection
+                      </Link>
+                    </div>
+                  )}
                 </div>
 
                 {/* Password / Security Card */}
